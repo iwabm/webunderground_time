@@ -1,6 +1,7 @@
 # MFADT: Web Underground
-## Abstraction of Time
-### Outfront Media
+### Abstraction of Time @ Outfront Media
+
+----
 
 Copy to your computer
 ```
