@@ -3,11 +3,6 @@
 
 ----
 
-Copy to your computer
-```
-git clone https://github.com/zachkrall/mfadt-clock.git
-```
-
 Install dependencies
 ```
 npm install
