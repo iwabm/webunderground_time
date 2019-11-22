@@ -1,99 +1,74 @@
 import * as THREE from 'three';
-import OrbitControls from './jsm/controls/OrbitControls.js';
+import { OrbitControls } from './jsm/controls/OrbitControls.js';
 import Stats from './jsm/libs/stats.module.js';
 
-console.log('running');
+import timeFormat from './utils/timeFormat.js';
+import { TimeDebug } from './utils/debug.js';
+import { resizeCanvas } from './utils/events.js';
 
-// const message = document.getElementById("message");
-//
-// function time(t) {
-//   let format = val => {
-//     return val.toString().padStart(2, "0");
-//   };
-//   let h = format(t.getHours());
-//   let m = format(t.getMinutes());
-//   let s = format(t.getSeconds());
-//   return `${h}:${m}:${s}`;
-// }
+import Renderer from './utils/Renderer.js';
 
+/* -------- PROJECT -------- */
+let config    = { debug: true };
+let time      = {};
+let width     = window.innerWidth;
+let height    = window.innerHeight;
 
-let scene, camera, controls,
-    ambient, point, loader,
-    renderer, container, stats;
+/* -------- SET UP THREE.JS -------- */
+let container = document.body;
+let scene     = new THREE.Scene();
+let camera    = new THREE.PerspectiveCamera(
+                   60,             // Field of view
+                   width / height, // Aspect ratio
+                   0.1,            // Near clipping pane
+                   1000            // Far clipping pane
+               );
+let renderer  = new Renderer({
+                   antialias: true
+                }, container );
+let controls  = new OrbitControls(camera, renderer.domElement);
+let stats     = new Stats();
+let debug     = new TimeDebug();
 
-init();
-animate();
+/* -------- START -------- */
+renderer.setup();
 
-function init() {
-  scene = new THREE.Scene();
-	camera = new THREE.PerspectiveCamera(
-		60, // Field of view
-		window.innerWidth / window.innerHeight, // Aspect ratio
-		0.1, // Near clipping pane
-		1000 // Far clipping pane
-	);
-	// Reposition the camera
-	camera.position.set(0, 30, 50);
-	// Point the camera at a given coordinate
-	// camera.lookAt(new THREE.Vector3(0, 15, 0));
+camera.position.set(0,0,-30);
 
-	// // Add an ambient lights
-	// ambient = new THREE.AmbientLight(0xffffff, 0.2);
-	// scene.add(ambient);
+if( config.debug ){
+   container.appendChild(stats.dom);
+   container.appendChild(debug.dom);
+}
 
-	// // Add a point light that will cast shadows
-	// point = new THREE.PointLight(0xffffff, 1);
-	// point.position.set(25, 50, 25);
-	// point.castShadow = true;
-	// point.shadow.mapSize.width = 1024;
-	// point.shadow.mapSize.height = 1024;
-	// scene.add(point);
+let geo    = new THREE.SphereBufferGeometry(10,10,10);
+let mat    = new THREE.MeshBasicMaterial({
+  color: 0x0000ff
+});
+let sphere = new THREE.Mesh(geo, mat);
 
-	// Create a renderer
-	renderer = new THREE.WebGLRenderer({ antialias: true });
-	// Set size
-	renderer.setPixelRatio(window.devicePixelRatio);
-	renderer.setSize(window.innerWidth, window.innerHeight);
-	// Set color
-	renderer.setClearColor(0xf8a5c2);
-	// renderer.gammaOutput = true;
-	// Enable shadow mapping
-	// renderer.shadowMap.enabled = true;
-	// renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+scene.add(sphere);
 
-	// Append to the document
-	container = document.createElement('div');
-	document.body.appendChild(container);
-	document.body.appendChild(renderer.domElement);
-	// Add resize listener
-	// window.addEventListener('resize', onWindowResize, false);
+/* -------- ANIMATION LOOP -------- */
+function update() {
+  requestAnimationFrame(update);
+  renderer.render(scene, camera);
 
-  // Add orbit control
-  controls = new OrbitControls(camera, renderer.domElement);
-  controls.target.set(0, -0.2, -0.2);
+  if( config.debug ){
+    stats.update();
+    debug.update(time.string);
+  }
   controls.update();
-
-	// Enable FPS stats
-	stats = new Stats();
-	container.appendChild(stats.dom);
 }
+update();
 
-// function onWindowResize() {
-// 	camera.aspect = window.innerWidth / window.innerHeight;
-// 	camera.updateProjectionMatrix();
-// 	renderer.setSize(window.innerWidth, window.innerHeight);
-// }
+/* -------- TICK TOCK -------- */
+setInterval(() => {
+  let t = new Date();
+  time = timeFormat(t);
+}, 100);
 
-function animate() {
-	requestAnimationFrame(animate);
-	// Re-render scene
-	renderer.render(scene, camera);
-	// Update stats
-	stats.update();
-}
-
-
-// setInterval(() => {
-//   let t = new Date();
-//   message.innerHTML = `${time(t)}`;
-// }, 100);
+/* -------- EVENT LISTENERS -------- */
+window.addEventListener('resize', ()=>{
+  width = window.innerWidth, height = window.innerHeight;
+  resizeCanvas(camera, renderer, width, height);
+}, false);

@@ -1,14 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Webpack Example</title>
-</head>
-<body>
-    <h1>Demo</h1>
-    <p id="message"></p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Outfront Media - Clocks</title>
+    <style type="text/css">
+      body{
+        font-family:sans-serif;
+        background:#999;
+      }
+      canvas{
+        position:absolute;
+        top:0;left:0;
+      }
+      #debug{
+        background:#f00;
+        padding: 10px;
+        position:fixed;
+        right:0;
+        top:0;
+        font-size:16px;
+        font-weight:bold;
+        color: white;
+        z-index:99999;
+      }
+    </style>
+  </head>
+  <body>
+
+    <canvas id="dummy"></canvas>
     <!-- JS is Injected Here -->
-</body>
+  </body>
 </html>

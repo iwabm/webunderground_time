@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack && rm dist/main.js",
+    "dev": "webpack-dev-server"
   },
   "keywords": [],
   "author": "",
@@ -17,5 +18,6 @@
     "webpack-dev-server": "^3.8.2"
   },
   "dependencies": {
+    "three": "^0.110.0"
   }
 }
