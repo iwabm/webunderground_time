@@ -20,6 +20,8 @@ export default function timeFormat(t) {
   let m = format( time.getMinutes() );
   let s = format( time.getSeconds() );
 
+  // TODO: am/pm
+
   // default, return object
   return {
     hour: h,
