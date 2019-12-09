@@ -42,7 +42,6 @@ let debug     = new Debug(context, config.debug);
 let sphere = new Sphere( context );
 // let flow   = new Flow ( context );
 
-
 let color = new Color( context );
 
 /* -------- START -------- */

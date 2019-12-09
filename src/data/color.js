@@ -10,9 +10,14 @@ export default class Color{
   }
 
   setup() {
-    // let time = t;
-    // let hour = time.hour;
-    this.context.renderer.setClearColor(0x00ffff);
+    let t = new Date();
+    let time  = timeFormat(t);
+    let col1 = '0x' + time.hour + time.min + time.sec;
+    console.log(col1);
+
+    this.context.renderer.setClearColor(0xff00ff, 0);
+    const can = document.querySelector('canvas');
+    can.style.background = `linear-gradient(to bottom,  #11e8bb 0%,#8200c9 100%)`;
   }
 }
 //
