@@ -15,7 +15,12 @@ module.exports = {
         inject: true,
         template: path.resolve( __dirname, 'index.html')
     	}),
-      new HtmlWebpackInlineSourcePlugin()
+      new HtmlWebpackInlineSourcePlugin(),
+      new webpack.DefinePlugin({
+        'process.env': {
+          NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+        },
+      })
     ],
     node: {
       fs: 'empty'

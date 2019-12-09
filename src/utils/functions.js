@@ -8,8 +8,7 @@
     time( new Date() );
 
 */
-
-export default function timeFormat(t) {
+export function timeFormat(t) {
   let time = t || new Date();
 
   let format = val => {
@@ -19,6 +18,7 @@ export default function timeFormat(t) {
   let h = format( time.getHours()   );
   let m = format( time.getMinutes() );
   let s = format( time.getSeconds() );
+  let n = time.getTime();
 
   // TODO: am/pm
 
@@ -27,6 +27,7 @@ export default function timeFormat(t) {
     hour: h,
     min:  m,
     sec:  s,
+    now:  n,
     string: `${h}:${m}:${s}`
   };
 }

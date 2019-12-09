@@ -1,71 +1,85 @@
-import * as THREE from 'three';
+import {
+  Scene
+} from 'three';
 import { OrbitControls } from './jsm/controls/OrbitControls.js';
-import Stats from './jsm/libs/stats.module.js';
 
-import timeFormat from './utils/timeFormat.js';
-import { TimeDebug } from './utils/debug.js';
+import { timeFormat } from './utils/functions.js';
 import { resizeCanvas } from './utils/events.js';
 
+import Debug from './utils/Debug.js';
+import Camera from './utils/Camera.js';
 import Renderer from './utils/Renderer.js';
 
+import Sphere from './objects/Sphere.js';
+// import Flow from './objects/Flow.js';
+
+import Color from './data/color.js';
+
 /* -------- PROJECT -------- */
-let config    = { debug: true };
-let time      = {};
+let config    = {
+                  debug: process.env.NODE_ENV == 'development',
+                  date: false
+                };
+let time;
 let width     = window.innerWidth;
 let height    = window.innerHeight;
 
 /* -------- SET UP THREE.JS -------- */
 let container = document.body;
-let scene     = new THREE.Scene();
-let camera    = new THREE.PerspectiveCamera(
-                   60,             // Field of view
-                   width / height, // Aspect ratio
-                   0.1,            // Near clipping pane
-                   1000            // Far clipping pane
-               );
-let renderer  = new Renderer({
-                   antialias: true
-                }, container );
+let scene     = new Scene();
+global.camera = new Camera(width,height);
+let renderer  = new Renderer(container);
 let controls  = new OrbitControls(camera, renderer.domElement);
-let stats     = new Stats();
-let debug     = new TimeDebug();
+let context   = {
+                  container: container,
+                  camera: camera,
+                  scene:  scene,
+                  renderer: renderer
+                };
+let debug     = new Debug(context, config.debug);
+
+/* -------- OBJECTS -------- */
+let sphere = new Sphere( context );
+// let flow   = new Flow ( context );
+
+
+let color = new Color( context );
 
 /* -------- START -------- */
 renderer.setup();
+camera.setup();
+debug.setup();
 
-camera.position.set(0,0,-30);
+sphere.setup();
 
-if( config.debug ){
-   container.appendChild(stats.dom);
-   container.appendChild(debug.dom);
-}
+// flow.setup();
 
-let geo    = new THREE.SphereBufferGeometry(10,10,10);
-let mat    = new THREE.MeshBasicMaterial({
-  color: 0xff00ff
-});
-let sphere = new THREE.Mesh(geo, mat);
+color.setup();
 
-scene.add(sphere);
 
 /* -------- ANIMATION LOOP -------- */
 function update() {
+
+  /* Tick Tock */
+  let t = config.date || new Date();
+  time  = timeFormat(t);
+
   requestAnimationFrame(update);
   renderer.render(scene, camera);
 
-  if( config.debug ){
-    stats.update();
-    debug.update(time.string);
-  }
+  // flow.update();
+
+  sphere.mesh.position.x = Math.sin(time.now * 0.001) * 20;
+
+  // console.log(time.now);
+  // sphere.add('x',0.1);
+  //
+  // sphere.beep(this);
+
+  debug.update(time);
   controls.update();
 }
 update();
-
-/* -------- TICK TOCK -------- */
-setInterval(() => {
-  let t = new Date();
-  time = timeFormat(t);
-}, 100);
 
 /* -------- EVENT LISTENERS -------- */
 window.addEventListener('resize', ()=>{

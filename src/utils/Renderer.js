@@ -1,15 +1,15 @@
-import * as THREE from 'three';
+import { WebGLRenderer } from 'three';
 
-export default class Renderer extends THREE.WebGLRenderer {
-  constructor( _options, _c ){
-    super( _options );
+export default class Renderer extends WebGLRenderer {
+  constructor( _c ){
+    super({ antialias: true });
     this.container = _c;
   }
   setup(){
 
     this.setPixelRatio(window.devicePixelRatio);
     this.setSize(window.innerWidth, window.innerHeight);
-    this.setClearColor(0x000000);
+    this.setClearColor(0x00ff00);
     this.gammaOutput = true;
 
     // add this renderer to our container
