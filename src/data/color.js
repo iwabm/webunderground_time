@@ -15,10 +15,20 @@ export default class Color{
     let col1 = '0x' + time.hour + time.min + time.sec;
     console.log(col1);
 
-    this.context.renderer.setClearColor(0xff00ff, 0);
+    this.context.renderer.setClearColor(0xffffff, 0);
     const can = document.querySelector('canvas');
     can.style.background = `linear-gradient(to bottom,  #11e8bb 0%,#8200c9 100%)`;
   }
+
+  update( time ){
+    let col1 = '0x' + time.hour + time.min + time.sec;
+    console.log(col1);
+    this.context.renderer.setClearColor(0xffffff, 0);
+    const can = document.querySelector('canvas');
+    can.style.background = 'linear-gradient(to bottom,  #11e8bb ' +time.sec+ '%,#8200c9 100%)';
+    // can.style.background = col1;
+  }
+
 }
 //
 // exports function setBackgroundColor( t ){

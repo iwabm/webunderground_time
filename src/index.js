@@ -75,6 +75,7 @@ function update() {
   //
   // sphere.beep(this);
 
+  color.update(time);
   debug.update(time);
   controls.update();
 }
