@@ -14,6 +14,7 @@ import Sphere from './objects/Sphere.js';
 // import Flow from './objects/Flow.js';
 
 import Color from './data/color.js';
+// import Video from './data/video.js';?
 
 /* -------- PROJECT -------- */
 let config    = {
@@ -44,6 +45,8 @@ let sphere = new Sphere( context );
 
 let color = new Color( context );
 
+// let video = new Video( context );
+
 /* -------- START -------- */
 renderer.setup();
 camera.setup();
@@ -54,6 +57,7 @@ sphere.setup();
 // flow.setup();
 
 color.setup();
+// video.setup();
 
 
 /* -------- ANIMATION LOOP -------- */
@@ -75,7 +79,7 @@ function update() {
   //
   // sphere.beep(this);
 
-  color.update(time);
+  // color.update(time);
   debug.update(time);
   controls.update();
 }
