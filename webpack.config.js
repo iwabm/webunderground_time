@@ -9,10 +9,33 @@ module.exports = {
     output: {
       path: path.resolve(__dirname, 'dist')
     },
+    module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              [
+                '@babel/preset-env',
+                {
+                  targets: {
+                    chrome: 52
+                  }
+                }
+              ]
+            ]
+          }
+        }
+      }
+    ]
+    },
     plugins: [
       new HtmlWebpackPlugin({
-    		inlineSource: '.(js|css)$',
-        inject: true,
+    		// inlineSource: '.(js|css)$',
+        // inject: true,
         template: path.resolve( __dirname, 'index.html')
     	}),
       new HtmlWebpackInlineSourcePlugin(),

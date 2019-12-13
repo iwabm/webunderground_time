@@ -32,9 +32,10 @@ export default class Color{
 
     console.log(color_top, + " " + color_bottom);
 
-    this.context.renderer.setClearColor(0xffffff, 0);
+    this.context.renderer.setClearColor(0xff00ff, 1);
     const can = document.querySelector('canvas');
-    can.style.background = 'linear-gradient(to bottom, ' + color_top + ' 0%, ' + color_bottom + ' 100%)';
+    // can.style.background = 'linear-gradient(to bottom, ' + color_top + ' 0%, ' + color_bottom + ' 100%)';
+    // can.style.background = 'linear-gradient(to bottom, ' + color_top + ' 0%, ' + color_bottom + ' 100%)';
   }
 
   // update( time ){

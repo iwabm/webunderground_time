@@ -1,16 +1,16 @@
 import {
   Scene
 } from 'three';
-import { OrbitControls } from './jsm/controls/OrbitControls.js';
+// import { OrbitControls } from './jsm/controls/OrbitControls.js';
 
 import { timeFormat } from './utils/functions.js';
 import { resizeCanvas } from './utils/events.js';
 
-import Debug from './utils/Debug.js';
+// import Debug from './utils/Debug.js';
 import Camera from './utils/Camera.js';
 import Renderer from './utils/Renderer.js';
 
-import Sphere from './objects/Sphere.js';
+// import Sphere from './objects/Sphere.js';
 // import Flow from './objects/Flow.js';
 
 import Color from './data/color.js';
@@ -22,25 +22,25 @@ let config    = {
                   date: false
                 };
 let time;
-let width     = window.innerWidth;
-let height    = window.innerHeight;
+let width     = "1080px"; // change here
+let height    = "1920px";
 
 /* -------- SET UP THREE.JS -------- */
-let container = document.body;
+let container = document.getElementById("test"); // change here
 let scene     = new Scene();
 global.camera = new Camera(width,height);
 let renderer  = new Renderer(container);
-let controls  = new OrbitControls(camera, renderer.domElement);
+// let controls  = new OrbitControls(camera, renderer.domElement);
 let context   = {
                   container: container,
                   camera: camera,
                   scene:  scene,
                   renderer: renderer
                 };
-let debug     = new Debug(context, config.debug);
+// let debug     = new Debug(context, config.debug);
 
 /* -------- OBJECTS -------- */
-let sphere = new Sphere( context );
+// let sphere = new Sphere( context );
 // let flow   = new Flow ( context );
 
 let color = new Color( context );
@@ -50,9 +50,9 @@ let color = new Color( context );
 /* -------- START -------- */
 renderer.setup();
 camera.setup();
-debug.setup();
+// debug.setup();
 
-sphere.setup();
+// sphere.setup();
 
 // flow.setup();
 
@@ -72,7 +72,7 @@ function update() {
 
   // flow.update();
 
-  sphere.mesh.position.x = Math.sin(time.now * 0.001) * 20;
+  // sphere.mesh.position.x = Math.sin(time.now * 0.001) * 20;
 
   // console.log(time.now);
   // sphere.add('x',0.1);
@@ -80,8 +80,8 @@ function update() {
   // sphere.beep(this);
 
   // color.update(time);
-  debug.update(time);
-  controls.update();
+  // debug.update(time);
+  // controls.update();
 }
 update();
 
